@@ -38,18 +38,26 @@
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback!</h3>
     {{feedbackForm.value| json}} {{feedbackForm.status | json}}
-    <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="half-width">
         <input matInput formControlName="firstName" placeholder="First Name" type="text">
+        <mat-error *ngIf="feedbackForm.get('firstName')?.hasError('required') 
+            && feedbackForm.get('firstName')?.touched">First Name is required</mat-error>
       </mat-form-field>
       <mat-form-field class="half-width">
         <input matInput formControlName="lastName" placeholder="Last Name" type="text">
+        <mat-error *ngIf="feedbackForm.get('lastName')?.hasError('required') 
+            && feedbackForm.get('lastName')?.touched">Last Name is required</mat-error>
       </mat-form-field>
       <mat-form-field class="half-width">
         <input matInput formControlName="telNum" placeholder="Tel. Number" type="tel">
+        <mat-error *ngIf="feedbackForm.get('telNumber')?.hasError('required') 
+            && feedbackForm.get('telNumber')?.touched">Tel. Number is required</mat-error>
       </mat-form-field>
       <mat-form-field class="half-width">
         <input matInput formControlName="email" placeholder="Email" type="email">
+        <mat-error *ngIf="feedbackForm.get('email')?.hasError('required') 
+            && feedbackForm.get('email')?.touched">Email is required</mat-error>
       </mat-form-field>
       <table class="form-size">
         <td>
@@ -64,7 +72,8 @@
       <mat-form-field class="full-width">
         <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
       </mat-form-field>
-      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+      <button type="submit" mat-button class="background-primary text-floral-white"
+        [disabled]="fform.form.invalid">Submit</button>
     
     </form>
   </div>
