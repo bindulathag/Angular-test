@@ -24,10 +24,12 @@ import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
 import { LoginComponent } from './login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule  } from "@angular/material/checkbox";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSelectModule } from "@angular/material/select";
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,10 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    FormsModule
+    MatSelectModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DishService,
