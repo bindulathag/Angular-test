@@ -30,6 +30,7 @@ import { MatCheckboxModule  } from "@angular/material/checkbox";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSelectModule } from "@angular/material/select";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { MatSelectModule } from "@angular/material/select";
     MatCheckboxModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule
   ],
