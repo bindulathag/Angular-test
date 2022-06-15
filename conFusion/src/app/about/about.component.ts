@@ -14,9 +14,14 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
     // this.leaders = this.leaderService.getLeaders();
+    
     //Promise
+    // this.leaderService.getLeaders()
+    //   .then(leaders => this.leaders = leaders);
+    
+    //Observable
     this.leaderService.getLeaders()
-      .then(leaders => this.leaders = leaders);
+      .subscribe(leaders => this.leaders = leaders);
   }
 
 }

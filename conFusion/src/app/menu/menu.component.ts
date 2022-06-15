@@ -18,8 +18,11 @@ export class MenuComponent implements OnInit {
     //this.dishes = this.dishService.getDishes();
 
     //Promises
-    this.dishService.getDishes()
-      .then(dishes => this.dishes = dishes);
+    // this.dishService.getDishes()
+    //   .then(dishes => this.dishes = dishes);
+
+    //Observable
+    this.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
   }
   
   onSelect(dish: Dish){
