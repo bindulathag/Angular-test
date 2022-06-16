@@ -47,5 +47,8 @@ export class DishService {
   getFeaturedDish(): Observable<Dish>{
     return of(DISHES.filter(dish => dish.featured)[0]).pipe(delay(2000));
   }
-
+  //use of params Observable
+  getDishIds(): Observable<string[] | any>{
+    return of(DISHES.map(dish => dish.id));//constructing array of Ids from DISHES
+  }
 }
