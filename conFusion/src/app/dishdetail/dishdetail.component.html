@@ -33,23 +33,47 @@
     
     <div fxFlex="40">
         <div><h3 mat-line>Comments</h3></div>
-        <div *ngFor="let comments of dishDetails.comments">
-        
+        <div *ngFor="let comments of dishDetails.comments">        
             <mat-list>
                 <mat-list-item>
                     <p mat-line>{{comments.comment}}</p>
                     <p mat-line>{{comments.rating}} stars</p>
                     <p mat-line>--{{comments.author}} {{comments.date| date}}</p>
                 </mat-list-item>
-                <!-- <mat-list-item></mat-list-item>
-                <mat-list-item>--{{comments.author}} {{comments.date| date}}</mat-list-item> -->
-            </mat-list>
+            </mat-list>            
         </div>
+                   
+        <form novalidate [formGroup]="commentsForm" #cForm="ngForm" (ngSubmit)="onSubmit()">
+            <div  [hidden]="cForm.form.invalid">                
+                <p mat-line>{{commentsForm.controls['comment'].value}}</p>
+                <p mat-line>{{commentsForm.controls['rating'].value}} stars</p>
+                <p mat-line>--{{commentsForm.controls['author'].value}}</p>
+            </div>
+            <div  >
+                
+                <mat-form-field class="half-width">
+                    <input matInput type="text" formControlName="author" placeholder="Name" required>
+                    <mat-error *ngIf="formErrors['author']">{{formErrors['author']}}</mat-error>
+                </mat-form-field>
+                <br>
+                <input matInput [hidden]="true" type="text" formControlName="date" value="{{date}}">
+                <mat-slider min="1" max="5" step="1" formControlName="rating" 
+                    thumbLabel tickInterval="1" value="5"></mat-slider>
+                <br>
+                <mat-form-field class="half-width">
+                    <input matInput type="text" formControlName="comment" placeholder="Your Comment" required>
+                    <mat-error *ngIf="formErrors['comment']">{{formErrors['comment']}}</mat-error>
+                </mat-form-field>
+                <br><br><br>
+                <button mat-button type="submit" class="background-primary text-floral-white"
+                [disabled]="commentsForm.invalid">Submit</button>
+            </div>
+        </form>
     </div>
 
 </div>
 <div [hidden]="dishDetails">
     <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
-  </div>
+</div>
 
 
