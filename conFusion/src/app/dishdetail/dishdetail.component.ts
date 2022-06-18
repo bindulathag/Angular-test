@@ -24,6 +24,7 @@ export class DishdetailComponent implements OnInit {
   updatedComment : Comment[];
   date = new Date().toISOString();
   ratingValue: number = 5;
+  dishErrorMsg: string;
   
   formErrors: {[key: string]: any}= {
     rating: this.ratingValue,
@@ -108,12 +109,14 @@ export class DishdetailComponent implements OnInit {
     // this.dishService.getDish(id)
     //   .then( dish => this.dishDetails = dish);
     this.dishService.getDish(id)
-      .subscribe( dish => this.dishDetails = dish);
+      .subscribe( dish => this.dishDetails = dish,
+        dishErrorMsg =>this.dishErrorMsg = <any>dishErrorMsg);
 
     //params
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-      .subscribe( dish => {this.dishDetails = dish, this.setPrevNext(dish.id)});
+      .subscribe( dish => {this.dishDetails = dish, this.setPrevNext(dish.id)},
+        dishErrorMsg => this.dishErrorMsg = <any>dishErrorMsg);
   }
 
   setPrevNext(id: string){

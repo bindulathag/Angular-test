@@ -9,12 +9,10 @@ import { DishService } from "../services/dish.service";
 })
 export class MenuComponent implements OnInit {
   dishes: Dish[];
+  errorMsg: string;
   //selectedDish: Dish;
-  //baseURL: string;
 
   constructor(private dishService:DishService, @Inject('BaseURL') public  BaseURL: string) { 
-    // this.baseURL = BaseURL;
-    // console.log("baseURL="+ BaseURL);
   }
 
   ngOnInit(): void {
@@ -26,7 +24,10 @@ export class MenuComponent implements OnInit {
     //   .then(dishes => this.dishes = dishes);
 
     //Observable
-    this.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
+    this.dishService.getDishes().subscribe(
+      dishes => this.dishes = dishes,
+      errorMsg => this.errorMsg = <any>errorMsg
+      );
   }
   
   // onSelect(dish: Dish){
