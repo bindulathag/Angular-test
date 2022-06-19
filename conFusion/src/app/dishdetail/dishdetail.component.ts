@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from "@angular/common";
 import { DishService } from '../services/dish.service';
 import { Dish } from "../shared/dish";
+import { Comment } from "../shared/comment";
 import { switchMap } from 'rxjs';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 
@@ -14,7 +15,8 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 export class DishdetailComponent implements OnInit {
 
   //@Input()
-  dishDetails: Dish;
+  dishDetails: Dish;  
+  dishcopy: Dish;
   dishIds: string[];
   prev: string;
   next: string;
@@ -87,20 +89,23 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit():void{
-    //this.updatedComment= this.commentsForm.value
-    console.log(this.commentsForm.get('date'));
-    //this.commentsForm.get('date').setValue((new Date()).toISOString());
     this.dishDetails.comments.push(this.commentsForm.value);
-    //this.dishDetails.comments.
-    //this.dishDetails.comments.push(this.updatedComment);
-    this.commentsForm.reset({
-      rating: this.ratingValue,
-      comment: '',
-      author: '',
-      date: new Date()
-    });
+    this.dishcopy = this.dishDetails;
+    this.dishService.putDish(this.dishcopy)
+      .subscribe(dish => 
+        {this.dishDetails = dish; this.dishcopy = dish;},
+        errmess => 
+          { this.dishDetails = <any>null; this.dishcopy = <any>null; this.dishErrorMsg = <any>errmess; }
+      );
+      this.commentsForm.reset({
+        rating: this.ratingValue,
+        comment: '',
+        author: '',
+        date: new Date()
+      });   
     this.commentsFormDirective.resetForm();
     this.commentsForm.controls['rating'].reset(this.ratingValue);
+    
   }
 
   ngOnInit(): void {
