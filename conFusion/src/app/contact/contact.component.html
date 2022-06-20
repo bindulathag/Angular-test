@@ -75,4 +75,22 @@
     
     </form>
   </div>
+
+  {{ feedback || feedbackcopy || feedbackErrorMsg}}
+  <div [hidden]="">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex *ngIf="feedbackErrorMsg">
+    <h2>Error</h2>
+    <h4>{{feedbackErrorMsg}}</h4>
+  </div>
+  <div fxFlex *ngIf="feedbackcopy" [@visibility]="visibility">
+    <p mat-line>First Name: {{feedbackcopy.firstName}}</p>
+    <p mat-line>Last Name: {{feedbackcopy.lastName}}</p>
+    <p mat-line>Tel. Number:{{feedbackcopy.telnum}}</p>
+    <p mat-line>Email: {{feedbackcopy.email}}</p>
+    <p mat-line>Contact You?: {{feedbackcopy.agree}}</p>
+    <p mat-line>How?: {{feedbackcopy.contactType}}</p>
+    <p mat-line>Feedback: {{feedbackcopy.message}}</p>
+  </div>
 </div>

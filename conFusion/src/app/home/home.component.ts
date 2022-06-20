@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { inject } from '@angular/core/testing';
 import { expand, flyInOut } from '../animations/app.animation';
 import { DishService } from '../services/dish.service';
 import { LeaderService } from '../services/leader.service';
@@ -27,6 +26,9 @@ export class HomeComponent implements OnInit {
   promotion: Promotion;
   leader: Leader;
   dishErrorMsg: string;
+  leaderErrorMsg: string;
+  promotionErrorMsg: any;
+
   constructor(private dishService: DishService, 
               private promotionService: PromotionService,
               private leaderService: LeaderService,
@@ -46,13 +48,23 @@ export class HomeComponent implements OnInit {
     //   .then(leader => this.leader = leader);
 
     //Observable
+    // this.dishService.getFeaturedDish()
+    //   .subscribe(dish =>this.dish = dish);
+    // this.promotionService.getFeaturedPromotion()
+    //   .subscribe(promotion => this.promotion = promotion);
+    // this.leaderService.getFeaturedLeader()
+    //   .subscribe(leader => this.leader = leader);
+
+    //HTTP Client
     this.dishService.getFeaturedDish()
       .subscribe(dish =>this.dish = dish,
         dishErrorMsg => this.dishErrorMsg =<any>dishErrorMsg);
     this.promotionService.getFeaturedPromotion()
-      .subscribe(promotion => this.promotion = promotion);
+      .subscribe(promotion => this.promotion = promotion,
+        promotionErrorMsg => this.promotionErrorMsg =<any>promotionErrorMsg);
     this.leaderService.getFeaturedLeader()
-      .subscribe(leader => this.leader = leader);
+      .subscribe(leader => this.leader = leader,
+        leaderErrorMsg => this.leaderErrorMsg =<any>leaderErrorMsg);
 
   }
 

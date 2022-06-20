@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControlDirective, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { flyInOut } from '../animations/app.animation';
+import { ActivatedRoute, Params } from '@angular/router';
+import { expand, flyInOut, visibility } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 import { Feedback,ContactType } from '../shared/feedback';
 
 @Component({
@@ -13,7 +15,8 @@ import { Feedback,ContactType } from '../shared/feedback';
     },
   animations: [
     flyInOut(),
-    // expand()
+    visibility(),
+    expand()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -22,6 +25,9 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  visibility = "shown";
+  feedbackcopy: Feedback;
+  feedbackErrorMsg: string;
 
   formErrors: {[key: string]: any}= {
     'firstName': '',
@@ -50,8 +56,11 @@ export class ContactComponent implements OnInit {
       'email': 'Email is not valid'
     }
   }
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private feedbackService: FeedbackService,
+              private route: ActivatedRoute) {
     this.createForm();
    }
 
@@ -78,6 +87,25 @@ export class ContactComponent implements OnInit {
   onSubmit():void{
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    //this.feedbackcopy = this.feedbackForm.value;
+    this.feedbackService.postFeedback(this.feedback)
+      .subscribe((feedback) => 
+        {//this.feedback = feedback; 
+          this.feedbackcopy = feedback;},
+        (errmess) => 
+          { this.feedback = <any>null; this.feedbackcopy = <any>null; this.feedbackErrorMsg = <any>errmess; }
+      );
+    // this.route.params.pipe(
+    //   switchMap((params: Params) => 
+    //     { 
+    //       this.visibility = 'hidden'; 
+    //       return this.feedbackService.getFeedbacks(); 
+    //     })).subscribe( feedback => 
+    //     { 
+    //       this.feedbackCopy = feedback; 
+    //       this.visibility = 'shown';
+    //     }, feedbackErrorMsg => this.feedbackErrorMsg = <any>feedbackErrorMsg);
+
     this.feedbackForm.reset({
       firstName: '',
       lastName: '',

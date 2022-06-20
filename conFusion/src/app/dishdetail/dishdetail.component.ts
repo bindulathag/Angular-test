@@ -137,12 +137,12 @@ export class DishdetailComponent implements OnInit {
           this.visibility = 'hidden'; 
           return this.dishService.getDish(+params['id']); 
         })).subscribe( dish => 
-          { 
-            this.dishDetails = dish; 
-            this.dishcopy = dish; 
-            this.setPrevNext(dish.id); 
-            this.visibility = 'shown';
-          }, dishErrorMsg => this.dishErrorMsg = <any>dishErrorMsg);
+        { 
+          this.dishDetails = dish; 
+          this.dishcopy = dish; 
+          this.setPrevNext(dish.id); 
+          this.visibility = 'shown';
+        }, dishErrorMsg => this.dishErrorMsg = <any>dishErrorMsg);
   }
 
   setPrevNext(id: string){
